@@ -62,7 +62,7 @@ class CartPage extends Page {
     await this.inputZip.addValue(this.newAddress.zip);
     await this.selectCountry.click();
     await this.selectCountry.selectByAttribute("value", "BA");
-    await browser.pause(3000)
+    await browser.pause(2000)
     await this.inputPhoneNumber.addValue(this.newAddress.phone);
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
