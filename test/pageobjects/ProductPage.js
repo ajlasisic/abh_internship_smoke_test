@@ -1,5 +1,6 @@
 const { $ } = require("@wdio/globals");
-const Page = require("./page");
+const Page = require("./Page");
+
 class ProductPage extends Page {
     get minervaTshirt(){
         return $('.products.list.items.product-items > li:nth-child(1)')

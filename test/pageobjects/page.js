@@ -9,12 +9,10 @@ module.exports = class Page {
    * Opens a sub page of the page
    * @param path path of the sub page (e.g. /path/to/page.html)
    */
-  open(path) {
-    return browser.url(`https://magento.softwaretestingboard.com/${path}`);
+  open() {
+    return browser.url('/');
   }  
-  static async getRandomEmail () {
-    let rndnum = Math.random();
-    let emailValue = "random.test+" + rndnum + "@test.com";
-    return emailValue;
+  async waitForDisplayed(el) {
+   await el.waitForDisplayed({ timeout: 15000 })
   }
 };

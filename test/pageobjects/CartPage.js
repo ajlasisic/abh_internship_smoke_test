@@ -1,6 +1,6 @@
 const { $ } = require("@wdio/globals");
-const Homepage = require("./homepage");
-const Page = require("./page");
+const Page = require("./Page");
+
 class CartPage extends Page {
   get inputEmail() {
     return $("#customer-email");
@@ -49,12 +49,9 @@ class CartPage extends Page {
     zip: 71000,
     phone: 123456,
   };
+  
   async orderAsGuest() {
-    await Homepage.shoppingCart.click()
-    await Homepage.btnProceedToCheckout.click();
-    await browser.pause(3000)
     await this.inputEmail.addValue(this.newAddress.email);
-    await browser.pause(2000)
     await this.inputFirstName.addValue(this.newAddress.firstname);
     await this.inputLastName.addValue(this.newAddress.lastname);
     await this.inputAddress.addValue(this.newAddress.address);
@@ -67,10 +64,8 @@ class CartPage extends Page {
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
   }
-  async orderSignedIn() {
-    await Homepage.shoppingCart.click()
-    await Homepage.btnProceedToCheckout.click();
-    await browser.pause(3000)
+  async orderAsSignedUser() {
+    await this.waitForDisplayed(this.btnNext)
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
   }

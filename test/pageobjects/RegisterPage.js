@@ -1,5 +1,5 @@
 const { $ } = require("@wdio/globals");
-const Page = require("./page");
+const Page = require("./Page");
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -8,9 +8,6 @@ class RegisterPage extends Page {
   /**
    * define selectors using getter methods
    */
-  get createAccountLink() {
-    return $(".panel.header > ul > li:nth-child(3)");
-  }
   get inputFirstName() {
     return $("#firstname");
   }
@@ -49,19 +46,19 @@ class RegisterPage extends Page {
     await this.btnCreateAccount.click();
   }
 
-  /**const emailCharacters = (await this.newUser.email).split("");
-    for (const char of emailCharacters) {
-      await browser.keys(char);
-    }
+  /**
    * overwrite specific options to adapt it to page object
    */
-  open() {
-    return super.open('customer/account/create/');
+
+  static async getRandomEmail () {
+    let rndnum = Math.random();
+    let emailValue = "random.test+" + rndnum + "@test.com";
+    return emailValue;
   }
   newUser = {
     firstname: "Test",
     lastname: "Testing",
-    email: Page.getRandomEmail(),
+    email: RegisterPage.getRandomEmail(),
     password: "Atlant123",
   };
 }

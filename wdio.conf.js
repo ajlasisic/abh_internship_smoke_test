@@ -85,7 +85,8 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://magento.softwaretesttingboard.com',
+    
+    baseUrl: 'https://magento.softwaretestingboard.com/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -182,6 +183,9 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {string} cid worker id (e.g. 0-0)
      */
+    before() {
+        browser.maximizeWindow()
+        },
     // beforeSession: function (config, capabilities, specs, cid) {
     // },
     /**
@@ -209,8 +213,9 @@ exports.config = {
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    // beforeTest: function (test, context) {
-    // },
+     beforeTest: function (test, context) {
+        browser.url('/');
+     },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)

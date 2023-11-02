@@ -1,6 +1,7 @@
 const { $ } = require("@wdio/globals");
-const Page = require("./page");
-class Homepage extends Page {
+const Page = require("./Page");
+
+class HomePage extends Page {
   get inputSearch() {
     return $("#search");
   }
@@ -13,16 +14,20 @@ class Homepage extends Page {
   get btnProceedToCheckout() {
     return $("#top-cart-btn-checkout");
   }
-  get logo() {
-    return $('body > div.page-wrapper > header > div.header.content > a > img')
+  get createAccountLink() {
+    return $('//*[text()="Create an Account"]')
+  }
+  get signInLink() {
+    return $("body > div.page-wrapper > header > div.panel.wrapper > div > ul > li:nth-child(2) > a");
   }
 
-  open() {
-    return super.open();
-  }
   async searchProduct() {
     await this.inputSearch.addValue('Luma')
     await this.searchIcon.click()
   }
+  async navigateToCheckout(){
+    await this.shoppingCart.click()
+    await this.btnProceedToCheckout.click();
+  }
 }
-module.exports = new Homepage();
+module.exports = new HomePage();
