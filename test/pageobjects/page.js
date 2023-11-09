@@ -13,6 +13,17 @@ module.exports = class Page {
     return browser.url('/');
   }  
   async waitForDisplayed(el) {
-   await el.waitForDisplayed({ timeout: 15000 })
+   await el.waitForDisplayed({ timeout: 10000 })
+  }
+  async waitForExist(el){
+  await el.waitForExist({ timeout: 10000 });
+  }
+  async waitForText(el, text){
+  await browser.waitUntil(async function () {
+    return (await el.getText()) === `${text}`}, {timeout: 10000})
+  }
+  async waitForSelected(el){
+    await browser.waitUntil(async function () {
+      return (await el.isSelected()) === true}, {timeout: 10000})
   }
 };

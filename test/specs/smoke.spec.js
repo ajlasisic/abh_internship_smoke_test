@@ -26,9 +26,7 @@ describe("Smoke test", () => {
   it("Checkout process without sign in", async () => {
     await HomePage.searchProduct()
     await ProductPage.addProductToCart();
-    await browser.pause(2000)
     await HomePage.navigateToCheckout();
-    await browser.pause(3000)
     await CartPage.orderAsGuest();
     await expect(CartPage.msgOrderSuccess).toHaveTextContaining("Thank you for your purchase!");
   });
@@ -38,7 +36,6 @@ describe("Smoke test", () => {
     await expect(LoginPage.loginSuccess).toHaveTextContaining("Welcome");
     await HomePage.searchProduct()
     await ProductPage.addProductToCart();
-    await browser.pause(2000)
     await HomePage.navigateToCheckout();
     await CartPage.orderAsSignedUser();
     await expect(CartPage.msgOrderSuccess).toHaveTextContaining("Thank you for your purchase!");

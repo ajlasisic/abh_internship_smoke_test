@@ -11,6 +11,9 @@ class HomePage extends Page {
   get shoppingCart() {
     return $(".minicart-wrapper > a");
   }
+  get numOfItemsInCart() {
+    return $('.minicart-wrapper > a > .counter.qty > .counter-number')
+  }
   get btnProceedToCheckout() {
     return $("#top-cart-btn-checkout");
   }
@@ -27,6 +30,7 @@ class HomePage extends Page {
   }
   async navigateToCheckout(){
     await this.shoppingCart.click()
+    await this.waitForDisplayed(await this.btnProceedToCheckout)
     await this.btnProceedToCheckout.click();
   }
 }

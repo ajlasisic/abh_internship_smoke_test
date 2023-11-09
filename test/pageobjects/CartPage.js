@@ -2,6 +2,10 @@ const { $ } = require("@wdio/globals");
 const Page = require("./Page");
 
 class CartPage extends Page {
+
+  get orderTimeline() {
+    return $('.opc-progress-bar')
+  }
   get inputEmail() {
     return $("#customer-email");
   }
@@ -25,6 +29,9 @@ class CartPage extends Page {
   }
   get inputPhoneNumber() {
     return $("#shipping-new-address-form > div:nth-child(10) > div > input");
+  }
+  get shippingMethod() {
+    return $('.radio')
   }
   get btnNext() {
     return $("#shipping-method-buttons-container > div > button");
@@ -51,6 +58,7 @@ class CartPage extends Page {
   };
   
   async orderAsGuest() {
+    await this.waitForDisplayed(this.orderTimeline)
     await this.inputEmail.addValue(this.newAddress.email);
     await this.inputFirstName.addValue(this.newAddress.firstname);
     await this.inputLastName.addValue(this.newAddress.lastname);
@@ -59,8 +67,9 @@ class CartPage extends Page {
     await this.inputZip.addValue(this.newAddress.zip);
     await this.selectCountry.click();
     await this.selectCountry.selectByAttribute("value", "BA");
-    await browser.pause(2000)
+    await this.inputPhoneNumber.click()
     await this.inputPhoneNumber.addValue(this.newAddress.phone);
+    await this.waitForSelected(this.shippingMethod)
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
   }
