@@ -1,7 +1,9 @@
 const { $ } = require("@wdio/globals");
 const Page = require("./Page");
+const { loginUser } = require("../data/login");
 
 class LoginPage extends Page {
+
   get inputEmail() {
     return $("#email");
   }
@@ -25,19 +27,13 @@ class LoginPage extends Page {
   }
 
   async login() {
-    await this.inputEmail.setValue(this.loginUser.email);
-    await this.inputPassword.setValue(this.loginUser.password);
+    await this.inputEmail.setValue(loginUser.email);
+    await this.inputPassword.setValue(loginUser.password);
     await this.btnSignIn.click();
   }
   async logout() {
     await this.signInDropdown.click()
     await this.btnSignOut.click();
   }
-
-  loginUser = {
-    email: 'test@random.com',
-    password: 'Atlant123',
-  };
-  
 }
 module.exports = new LoginPage();

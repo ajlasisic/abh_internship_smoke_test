@@ -1,5 +1,6 @@
 const { $ } = require("@wdio/globals");
 const Page = require("./Page");
+const { createNewUser } = require("../data/register");
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -37,30 +38,17 @@ class RegisterPage extends Page {
    * e.g. to register with valid data
    */
   async register() {
-    await this.inputFirstName.setValue(this.newUser.firstname);
-    await this.inputLastName.setValue(this.newUser.lastname);
+    await this.inputFirstName.setValue(createNewUser.firstname);
+    await this.inputLastName.setValue(createNewUser.lastname);
     await this.inputEmail.click();
-    await browser.keys(await this.newUser.email);
-    await this.inputPassword.setValue(this.newUser.password);
-    await this.inputPasswordConfirm.setValue(this.newUser.password);
+    await browser.keys(createNewUser.email);
+    await this.inputPassword.setValue(createNewUser.password);
+    await this.inputPasswordConfirm.setValue(createNewUser.password);
     await this.btnCreateAccount.click();
   }
 
   /**
    * overwrite specific options to adapt it to page object
    */
-
-  static async getRandomEmail () {
-    let rndnum = Math.random();
-    let emailValue = "random.test+" + rndnum + "@test.com";
-    return emailValue;
-  }
-  newUser = {
-    firstname: "Test",
-    lastname: "Testing",
-    email: RegisterPage.getRandomEmail(),
-    password: "Atlant123",
-  };
 }
-
 module.exports = new RegisterPage();

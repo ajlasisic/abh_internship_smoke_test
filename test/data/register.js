@@ -1,10 +1,10 @@
 const getRandomEmail = function () {
-    let rndnum = Math.random();
-    let emailValue = "random.test+" + rndnum + "@test.com";
-    return emailValue;
-  }
+  let rndnum = Math.random();
+  let emailValue = "random.test+" + rndnum + "@test.com";
+  return emailValue;
+};
 
-export const newAddress = {
+const createNewAddress = {
     email: "random2@random.com",
     firstname: "Test",
     lastname: "Testing",
@@ -12,11 +12,12 @@ export const newAddress = {
     city: "Sarajevo",
     zip: 71000,
     phone: 123456,
-  };
+}
 
-export const newUser = {
+const createNewUser = {
     firstname: "Test",
     lastname: "Testing",
-    email: getRandomEmail,
+    email: getRandomEmail(),
     password: "Atlant123",
-  };
+}
+module.exports = { getRandomEmail, createNewAddress, createNewUser };

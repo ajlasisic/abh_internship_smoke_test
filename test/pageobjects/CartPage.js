@@ -1,5 +1,6 @@
 const { $ } = require("@wdio/globals");
 const Page = require("./Page");
+const { createNewAddress } = require("../data/register");
 
 class CartPage extends Page {
 
@@ -47,28 +48,19 @@ class CartPage extends Page {
   get orderNumber() {
     return $(".checkout-success");
   }
-  newAddress = {
-    email: "random2@random.com",
-    firstname: "Test",
-    lastname: "Testing",
-    address: "Test address",
-    city: "Sarajevo",
-    zip: 71000,
-    phone: 123456,
-  };
   
   async orderAsGuest() {
     await this.waitForDisplayed(this.orderTimeline)
-    await this.inputEmail.addValue(this.newAddress.email);
-    await this.inputFirstName.addValue(this.newAddress.firstname);
-    await this.inputLastName.addValue(this.newAddress.lastname);
-    await this.inputAddress.addValue(this.newAddress.address);
-    await this.inputCity.addValue(this.newAddress.city);
-    await this.inputZip.addValue(this.newAddress.zip);
+    await this.inputEmail.addValue(createNewAddress.email);
+    await this.inputFirstName.addValue(createNewAddress.firstname);
+    await this.inputLastName.addValue(createNewAddress.lastname);
+    await this.inputAddress.addValue(createNewAddress.address);
+    await this.inputCity.addValue(createNewAddress.city);
+    await this.inputZip.addValue(createNewAddress.zip);
     await this.selectCountry.click();
     await this.selectCountry.selectByAttribute("value", "BA");
     await this.inputPhoneNumber.click()
-    await this.inputPhoneNumber.addValue(this.newAddress.phone);
+    await this.inputPhoneNumber.addValue(createNewAddress.phone);
     await this.waitForSelected(this.shippingMethod)
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
