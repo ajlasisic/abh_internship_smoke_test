@@ -1,5 +1,7 @@
 const { $ } = require("@wdio/globals");
-const Page = require("./page");
+const Page = require("./Page");
+const HomePage = require("./HomePage");
+
 class ProductPage extends Page {
     get minervaTshirt(){
         return $('.products.list.items.product-items > li:nth-child(1)')
@@ -16,8 +18,9 @@ class ProductPage extends Page {
     async addProductToCart() {
         await this.selectSizeS.click()
         await this.selectColorBlue.click()
-        await this.minervaTshirt.moveTo();
+        await this.minervaTshirt.moveTo()
         await this.btnAddToCart.click()
-    }
+        await this.waitForText(HomePage.numOfItemsInCart, 1)
+    } 
 }
 module.exports = new ProductPage()

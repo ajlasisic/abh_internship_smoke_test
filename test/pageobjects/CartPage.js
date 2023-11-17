@@ -1,7 +1,12 @@
 const { $ } = require("@wdio/globals");
-const Homepage = require("./homepage");
-const Page = require("./page");
+const Page = require("./Page");
+const { createNewAddress } = require("../data/register");
+
 class CartPage extends Page {
+
+  get orderTimeline() {
+    return $('.opc-progress-bar')
+  }
   get inputEmail() {
     return $("#customer-email");
   }
@@ -26,6 +31,9 @@ class CartPage extends Page {
   get inputPhoneNumber() {
     return $("#shipping-new-address-form > div:nth-child(10) > div > input");
   }
+  get shippingMethod() {
+    return $('.radio')
+  }
   get btnNext() {
     return $("#shipping-method-buttons-container > div > button");
   }
@@ -40,37 +48,25 @@ class CartPage extends Page {
   get orderNumber() {
     return $(".checkout-success");
   }
-  newAddress = {
-    email: "random2@random.com",
-    firstname: "Test",
-    lastname: "Testing",
-    address: "Test address",
-    city: "Sarajevo",
-    zip: 71000,
-    phone: 123456,
-  };
+  
   async orderAsGuest() {
-    await Homepage.shoppingCart.click()
-    await Homepage.btnProceedToCheckout.click();
-    await browser.pause(3000)
-    await this.inputEmail.addValue(this.newAddress.email);
-    await browser.pause(2000)
-    await this.inputFirstName.addValue(this.newAddress.firstname);
-    await this.inputLastName.addValue(this.newAddress.lastname);
-    await this.inputAddress.addValue(this.newAddress.address);
-    await this.inputCity.addValue(this.newAddress.city);
-    await this.inputZip.addValue(this.newAddress.zip);
+    await this.waitForDisplayed(this.orderTimeline)
+    await this.inputEmail.addValue(createNewAddress.email);
+    await this.inputFirstName.addValue(createNewAddress.firstname);
+    await this.inputLastName.addValue(createNewAddress.lastname);
+    await this.inputAddress.addValue(createNewAddress.address);
+    await this.inputCity.addValue(createNewAddress.city);
+    await this.inputZip.addValue(createNewAddress.zip);
     await this.selectCountry.click();
     await this.selectCountry.selectByAttribute("value", "BA");
-    await browser.pause(2000)
-    await this.inputPhoneNumber.addValue(this.newAddress.phone);
+    await this.inputPhoneNumber.click()
+    await this.inputPhoneNumber.addValue(createNewAddress.phone);
+    await this.waitForSelected(this.shippingMethod)
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
   }
-  async orderSignedIn() {
-    await Homepage.shoppingCart.click()
-    await Homepage.btnProceedToCheckout.click();
-    await browser.pause(3000)
+  async orderAsSignedUser() {
+    await this.waitForDisplayed(this.btnNext)
     await this.btnNext.click();
     await this.btnPlaceOrder.click();
   }
